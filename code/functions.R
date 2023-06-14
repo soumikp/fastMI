@@ -1,10 +1,10 @@
 require(reticulate)
 py_install("fastkde", pip = TRUE)
-#source_python(file.path(here(), "code/fastkde_mi.py"))
+source_python(file.path(here(), "code/fastkde_mi.py"))
 
 require(JMI) # for JMI
-require(pracma)
-require(ks)
+
+require(ks) # for empirical copula
 require(copula) # for empirical copula density estimation
 
 estim_emi <- function(data, m_x, m_y){
@@ -12,15 +12,13 @@ estim_emi <- function(data, m_x, m_y){
   n = nrow(data)
   x = copula::F.n(pobs(as.matrix(data[,m_x])), pobs(as.matrix(data[,m_x])))
   y = copula::F.n(pobs(as.matrix(data[,m_y])), pobs(as.matrix(data[,m_y])))
-  
   xy = matrix(c(x,y), n, 2)
-  H = Hpi.diag(xy)
   
-  fx = kde(x, h=kde(x)$h, eval.point=x)$estimate
-  fy = kde(y, h=kde(y)$h, eval.point=y)$estimate
-  fxy = kde(xy, H=H, eval.point=xy)$estimate
+  fx = kde(x, h=ks::Hlscv(x), eval.point=x)$estimate
+  fy = kde(y, h=ks::Hlscv(y), eval.point=y)$estimate
+  fxy = kde(xy, H=ks::Hlscv(xy), eval.point=xy)$estimate
   
-  mi = mean(log(fxy/(fx*fy)))
+  mi = mean(log(fxy/fx*fy))
   
   return((mi))
   
