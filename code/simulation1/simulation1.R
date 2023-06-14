@@ -1,6 +1,6 @@
-rm(list = ls())
-source("/home/soumikp/2022_jmva/code/patterns.R")
-source("/home/soumikp/2022_jmva/code/functions.R")
+#require(here)
+source(file.path(here(), "code/patterns.R"))
+source(file.path(here(), "code/functions.R"))
 
 require(tidyverse)
 require(pracma)
@@ -9,14 +9,14 @@ values = expand.grid(n = c(64, 128, 256),
                      pattern = c(1, 2, 3), 
                      tau = sort(c((0:9/10))))
 
-i = as.numeric(Sys.getenv("SLURM_ARRAY_TASK_ID"))
-#i = sample(1:nrow(values), 1)
+i = as.numeric(Sys.getenv("SLURM_ARRAY_TASK_ID")) ## running on cluster. 
+#i = sample(1:nrow(values), 1) ## running locally
 
 n = values[i, 1]
 pattern = values[i, 2]
 tau = values[i, 3]
 
-iter = 250
+iter = 1000
 
 ## gaussian copula data
 if(pattern == 1){
@@ -51,6 +51,7 @@ if(pattern == 3){
 op <- cbind(pattern, n, tau, target, op)
 colnames(op) <- c("pat", "n", "tau", "true", "fmi", "jmi", "emi")
 
-output_folder = file.path("/home/soumikp/2022_jmva/output",  paste0("simulation1"),  paste0(pattern, "_", n, "_", tau, "_output.csv"))
-write.csv(op, output_folder)
+#### not run ####
+#output_folder = file.path("/home/soumikp/2022_jmva/output",  paste0("simulation1"),  paste0(pattern, "_", n, "_", tau, "_output.csv"))
+#write.csv(op, output_folder)
 

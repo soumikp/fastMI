@@ -16,17 +16,17 @@ p_load(
   readxl, here, rdrop2, lubridate, zoo, tidyverse, purrr, data.table, stringr, tidyr, vroom
 )
 
-results <- read_csv(file.path(here(), "simulation3.csv"))  
+results <- read_csv(file.path(here(), "2023_jmva/output_raw", "simulation3.csv"))  
 
 plot_title = "Comparison of empirical power of competing tests of independences based on mutual information (MI) for different configurations of various copula families for varying sample sizes."
 plot_subtitle = "The dotted black line parallel to the x-axis denotes specified level of significance = 0.05."
-plot_caption = "The estimation methods compared here are the empirical copula-based plugin MI (ecMI), the Fast Fourier transform-based MI (fastMI) and the jackknifed MI (JMI)."
+plot_caption = "The estimation methods compared here are the empirical copula-based plugin MI (ECMI), the Fast Fourier transform-based MI (fastMI) and the jackknifed MI (JMI)."
 
 p <- results %>% 
-  mutate(name = factor(case_when(type == "emi" ~ "ecMI", 
+  mutate(name = factor(case_when(type == "emi" ~ "ECMI", 
                                  type == "fmi" ~ "fastMI", 
                                  type == "jmi" ~ "JMI"), 
-                       levels = c("fastMI", "JMI", "ecMI"))) %>% 
+                       levels = c("fastMI", "JMI", "ECMI"))) %>% 
   mutate(n = factor(paste0("n = ", sampsize), levels = c("n = 128", "n = 256"))) %>%  
   ggplot(aes(x = val_tau, y = value, color = name, linetype = name)) + 
   #geom_line(linewidth = 1) + 
@@ -34,8 +34,7 @@ p <- results %>%
   #geom_point() + 
   geom_smooth(method = "loess", se = FALSE, span = 0.4) + 
   facet_grid(rows = vars(family), 
-             cols = vars(n), 
-             scales = "free_x") + 
+             cols = vars(n)) + 
   xlab(TeX("$Kendall's \\tau$")) + 
   ylab("Empirical power") +
   scale_color_aaas() +
@@ -67,7 +66,7 @@ p <- results %>%
                      #labels = scales::number_format(accuracy = 0.01, decimal.mark = '.')
                      ) 
 
-ggsave(file.path(here(), "simulation3_figure.pdf"),
+ggsave(file.path(here(), "2023_jmva/output_processed", "simulation3.pdf"),
        p,
        width = 8.5,
        height = 11,

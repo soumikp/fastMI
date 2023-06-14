@@ -1,9 +1,7 @@
 require(copula)
 require(cubature)
 
-
-
-#### For univariate margins ####
+#### For univariate margins (tables 1, 3; figures 1 and 3) ####
 
 # given tau, calculate theta
 tau_theta_gaussian <- function(tau){
@@ -70,7 +68,7 @@ rclayton <- function(theta, n=250){
 }
 
 
-#### multivariate marginals
+#### multivariate marginals (simulations 2 and 4) ####
 
 ## dispersion matrix for exchangeable structure - one parameter
 Sigma_ex <- function(rho_ex, m_x, m_y){

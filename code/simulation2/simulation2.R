@@ -1,6 +1,6 @@
 rm(list = ls())
-source("/home/soumikp/2022_jmva/code/patterns.R")
-source("/home/soumikp/2022_jmva/code/functions.R")
+source(file.path(here(), "code/functions.R"))
+source(file.path(here(), "code/patterns.R"))
 
 require(tidyverse)
 require(pracma)
@@ -12,8 +12,8 @@ values = expand.grid(n = c(128, 256, 512),
 
 values = values %>% filter(!(pattern > 3 & tau > 0.5)) ## 126 parameter combinations
 
-i = as.numeric(Sys.getenv("SLURM_ARRAY_TASK_ID"))
-#i = sample(1:nrow(values), 1)
+i = as.numeric(Sys.getenv("SLURM_ARRAY_TASK_ID")) ## cluster 
+#i = sample(1:nrow(values), 1) ## running locally
 
 n = values[i, 1]
 pattern = values[i, 2]
@@ -79,6 +79,7 @@ if(pattern == 5){
 op <- cbind(pattern, n, rho, target, op)
 colnames(op) <- c("pat", "n", "rho", "true", "fmi", "jmi", "emi")
 
-output_folder = file.path("/home/soumikp/2022_jmva/output",  paste0("simulation2"),  paste0(pattern, "_", n, "_", rho, "_output.csv"))
-write.csv(op, output_folder)
+### not run - for saving ###
+#output_folder = file.path("/home/soumikp/2022_jmva/output",  paste0("simulation2"),  paste0(pattern, "_", n, "_", rho, "_output.csv"))
+#write.csv(op, output_folder)
 

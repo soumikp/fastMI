@@ -1,9 +1,6 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[ ]:
-
-
 from fastkde import fastKDE
 import numpy as np
 import pandas as pd

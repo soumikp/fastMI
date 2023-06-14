@@ -16,17 +16,25 @@ p_load(
   readxl, here, rdrop2, lubridate, zoo, tidyverse, purrr, data.table, stringr, tidyr, vroom
 )
 
-results = read_csv(file.path(here(), "simulation4.csv"))  
+results = read_csv(file.path(here(), "2023_jmva/output_raw", "simulation4.csv"))  
 
 plot_title = "Comparison of empirical power of competing tests of independences based on mutual information (MI) for different configurations of various copula families for varying sample sizes."
 plot_subtitle = "The dotted black line parallel to the x-axis denotes specified level of significance = 0.05."
-plot_caption = "The estimation methods compared here are the empirical copula-based plugin MI (ecMI), the Fast Fourier transform-based MI (fastMI) and the jackknifed MI (JMI)."
+plot_caption = "The estimation methods compared here are the empirical copula-based plugin MI (ECMI), the Fast Fourier transform-based MI (fastMI) and the jackknifed MI (JMI)."
 
 p <- results %>% 
   mutate(name = factor(case_when(type == "fmi" ~ "fastMI", 
-                                 type == "emi" ~ "ecMI", 
+                                 type == "emi" ~ "ECMI", 
                                  type == "jmi" ~ "JMI"), 
-                       levels = c("fastMI", "JMI", "ecMI"))) %>% 
+                       levels = c("fastMI", "JMI", "ECMI"))) %>%
+  mutate(family =  factor(case_when(family == "Ex" ~ "CS",
+                                    family == "Ar1" ~ "AR-1",
+                                    family == "Spatial" ~ "Spatial",
+                                    family == "Mild" ~ "Block (1/3)",
+                                    family == "Strong" ~ "Block (2/3)"), 
+                 levels = c("AR-1", "CS", "Spatial", 
+                            "Block (1/3)", 
+                            "Block (2/3)"))) %>% 
   mutate(n = factor(paste0("n = ", sampsize), levels = c("n = 128", "n = 256"))) %>%  
   ggplot(aes(x = rho, y = value, color = name, linetype = name)) + 
   #geom_line(linewidth = 1) + 
@@ -46,7 +54,7 @@ p <- results %>%
         axis.text.x = element_text(size = 8, vjust = 0.5),
         axis.title = element_text(size = 12), 
         
-        strip.text = element_text(size = 10, face = "bold", color = "white"), 
+        strip.text = element_text(size = 10, color = "white"), 
         strip.background = element_rect(fill = "black"),
         
         legend.title = element_text(size = 12, face = "bold"), 
@@ -68,7 +76,7 @@ p <- results %>%
                      ) 
 
 
-ggsave(file.path(here(), "simulation4_figure.pdf"), 
+ggsave(file.path(here(), "2023_jmva/output_processed/", "simulation4.pdf"), 
        p,
        width = 8.5,
        height = 11,

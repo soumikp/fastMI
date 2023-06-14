@@ -1,15 +1,15 @@
 rm(list = ls())
-source("/home/soumikp/2022_jmva/code/functions.R")
-source("/home/soumikp/2022_jmva/code/patterns.R")
+source(file.path(here(), "code/functions.R"))
+source(file.path(here(), "code/patterns.R"))
 
-r = 250
-t = c(0:4)/10 + 0.05 
+r = 500
+t = seq(0, 0.5, 0.05) 
 samp = c(128, 256)
 
-values = expand.grid(t, samp, iter = c(1:165))
+values = expand.grid(t, samp, iter = c(1:200))
 
-i = as.numeric(Sys.getenv("SLURM_ARRAY_TASK_ID"))
-#i = sample(1:nrow(values), 1)
+i = as.numeric(Sys.getenv("SLURM_ARRAY_TASK_ID")) ## running on cluster
+#i = sample(1:nrow(values), 1) ## running locally
 
 val_tau = values[i,1]
 sampsize = values[i,2]
@@ -37,9 +37,8 @@ pval_clayton <- apply(rbind(t(perm_clayton), obs_clayton), 2, pval_helper)
 
 pvals <- c(sampsize, val_tau, iter, gauss = pval_gauss, gumbel = pval_gumbel, clayton = pval_clayton)
 
-## saving to folder
-output_folder = file.path("/home/soumikp/2022_jmva/output", "simulation3",  
-                          paste0(sampsize, "_", val_tau, "_", iter, "_output.csv")
-                          )
 
-write.csv(pvals, output_folder)
+### not run ###
+## saving to folder
+# output_folder = file.path("/home/soumikp/2022_jmva/output", "simulation3",  paste0(sampsize, "_", val_tau, "_", iter, "_output.csv") )
+# write.csv(pvals, output_folder)

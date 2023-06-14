@@ -1,8 +1,9 @@
 require(reticulate)
-source_python("/home/soumikp/2022_jmva/code/fastkde_mi.py")
+py_install("fastkde", pip = TRUE)
+#source_python(file.path(here(), "code/fastkde_mi.py"))
 
 require(JMI) # for JMI
-
+require(pracma)
 require(ks)
 require(copula) # for empirical copula density estimation
 

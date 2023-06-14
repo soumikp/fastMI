@@ -4,17 +4,17 @@ require(tidyverse)
 require(pracma)
 require(MASS)
 
-source("/home/soumikp/2022_jmva/code/patterns.R")
-source("/home/soumikp/2022_jmva/code/functions.R")
+source(file.path(here(), "code/patterns.R"))
+source(file.path(here(), "code/functions.R"))
 
 r = 250
 
 values = expand.grid(rho = (c((0:5/10))), 
                      n = c(128, 256), 
-                     iter = c(1:100))
+                     iter = c(1:250))
 
-i = as.numeric(Sys.getenv("SLURM_ARRAY_TASK_ID"))
-#i = sample(1:nrow(values), 1)
+i = as.numeric(Sys.getenv("SLURM_ARRAY_TASK_ID")) ## running on cluster
+#i = sample(1:nrow(values), 1) ## running locally
 
 n = values[i,2]
 rho = values[i,1]
@@ -57,10 +57,8 @@ pvals <- c(n, rho, iter,
            ex = pval_ex, ar1 = pval_ar1, spatial = pval_spatial, mild = pval_mild, strong = pval_strong)
 
 
-## saving to folder
-output_folder = file.path("/home/soumikp/2022_jmva/output", "simulation4",  
-                          paste0(n, "_", rho, "_", iter, "_output.csv"))
-
-write.csv(pvals, output_folder)
+## not run 
+# output_folder = file.path("/home/soumikp/2022_jmva/output", "simulation4",  paste0(n, "_", rho, "_", iter, "_output.csv"))
+# write.csv(pvals, output_folder)
 
 
