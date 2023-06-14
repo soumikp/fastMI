@@ -3,5 +3,5 @@
 .RData
 .Ruserdata
 .sh
-output/
+output
 unused/
