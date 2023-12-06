@@ -93,8 +93,8 @@ p_left <- results  %>%
              scales = "free_x") + 
   xlab(TeX("Kendall's  \\tau")) + 
   ylab("Residual mean squared error") +
-  scale_color_aaas() +
-  scale_fill_aaas() + 
+  scale_color_grey() +
+  scale_fill_grey() + 
   theme_bw() + 
   theme(legend.position = "bottom", 
         
@@ -146,8 +146,8 @@ p_center <- results  %>%
              scales = "free_x") + 
   xlab(TeX("Kendall's  \\tau")) + 
   ylab("Absolute bias") +
-  scale_color_aaas() +
-  scale_fill_aaas() + 
+  scale_color_grey() +
+  scale_fill_grey() + 
   theme_bw() + 
   theme(legend.position = "bottom", 
         
@@ -199,8 +199,8 @@ p_right <- results  %>%
              scales = "free_x") + 
   xlab(TeX("Kendall's  \\tau")) + 
   ylab("Standard error") +
-  scale_color_aaas() +
-  scale_fill_aaas() + 
+  scale_color_grey() +
+  scale_fill_grey() + 
   theme_bw() + 
   theme(legend.position = "bottom", 
         
@@ -238,7 +238,7 @@ p <- (p_left + p_center +  p_right) +
         plot.caption = element_text(size = 10, hjust = 0, face = "italic")) 
  
 
-ggsave(file.path(here(), "2023_jmva/output_processed/", "simulation1.pdf"), 
+ggsave(file.path(here(), "2023_jmva/output_processed/", "simulation1_bw.pdf"), 
        p,
        height = 8.5,
        width = 11,

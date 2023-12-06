@@ -37,7 +37,7 @@ p <- results %>%
              cols = vars(n)) + 
   xlab(TeX("$Kendall's \\tau$")) + 
   ylab("Empirical power") +
-  scale_color_aaas() +
+  scale_color_grey() +
   theme_bw() + 
   theme(legend.position = "bottom", 
         
@@ -66,7 +66,7 @@ p <- results %>%
                      #labels = scales::number_format(accuracy = 0.01, decimal.mark = '.')
                      ) 
 
-ggsave(file.path(here(), "2023_jmva/output_processed", "simulation3.pdf"),
+ggsave(file.path(here(), "2023_jmva/output_processed", "simulation3_bw.pdf"),
        p,
        width = 8.5,
        height = 11,

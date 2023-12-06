@@ -46,7 +46,7 @@ p <- results %>%
              scales = "free_x") + 
   xlab(TeX("$Kendall's \\tau$")) + 
   ylab("Empirical power") +
-  scale_color_aaas() +
+  scale_color_grey() +
   theme_bw() + 
   theme(legend.position = "bottom", 
         
@@ -76,7 +76,7 @@ p <- results %>%
                      ) 
 
 
-ggsave(file.path(here(), "2023_jmva/output_processed/", "simulation4.pdf"), 
+ggsave(file.path(here(), "2023_jmva/output_processed/", "simulation4_bw.pdf"), 
        p,
        width = 8.5,
        height = 11,

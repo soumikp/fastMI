@@ -7,7 +7,7 @@ library(pacman)
 
 p_load(
   #--- Packages to Fit Models
-  MASS, logistf, survival, randcorr, JMI, 
+  MASS, logistf, survival, randcorr, JMI, calibrate,
   #--- Packages to Produce Tables
   gtsummary, flextable, janitor, broom, officer, kableExtra, reactable, 
   #--- Packages to Produce Figures
@@ -17,7 +17,10 @@ p_load(
 )
 
 source(file.path(here(), "code", "patterns.R"))
-source(file.path(here(), "code", "functions.R"))
+
+mi_mvn <- function(Sigma, m_x, m_y){
+  0.5*log((det(Sigma[m_x, m_x])*det(Sigma[m_y, m_y]))/det(Sigma))
+}
 
 scaleFUN <- function(x) sprintf("%.2f", x)
 
@@ -114,8 +117,8 @@ p_left <- results  %>%
              scales = "free_x") + 
   xlab(TeX("Pearson's  \\rho")) + 
   ylab("Residual mean squared error") +
-  scale_color_aaas() +
-  scale_fill_aaas() + 
+  scale_color_grey() +
+  scale_fill_grey() + 
   theme_bw() + 
   theme(legend.position = "bottom", 
         
@@ -157,7 +160,7 @@ p <- (p_left) +
         plot.caption = element_text(size = 10, hjust = 0, face = "italic")) 
  
 
-ggsave(file.path(here(), "2023_jmva/output_processed", "simulation2.pdf"),
+ggsave(file.path(here(), "2023_jmva/output_processed", "simulation2_bw.pdf"),
        p,
        height = 8.5,
        width = 11,

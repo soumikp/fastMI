@@ -72,7 +72,7 @@ rclayton <- function(theta, n=250){
 
 ## dispersion matrix for exchangeable structure - one parameter
 Sigma_ex <- function(rho_ex, m_x, m_y){
-  return(((1 - rho_ex)*diag(length(m_x) + length(m_y)) + rho_ex*ones(length(m_x) + length(m_y))))
+  return(((1 - rho_ex)*diag(length(m_x) + length(m_y)) + rho_ex*calibrate::ones(length(m_x) + length(m_y))))
 }
 
 ## dispersion matrix for AR1 structure - one parameter
@@ -105,9 +105,9 @@ Sigma_spatial <- function(rho_spatial, m_x, m_y){
 Sigma_between_mild <- function(rho_between, m_x, m_y){
   dim = length(m_x) + length(m_y)
   sigma <- diag(dim)
-  sigma_xx <- (1 - 0.3)*diag(length(m_x)) + 0.3*ones(length(m_x))
-  sigma_yy <- (1 - 0.3)*diag(length(m_x)) + 0.3*ones(length(m_x))
-  sigma_xy <- rho_between*ones(n = length(m_x), m = length(m_y))
+  sigma_xx <- (1 - 0.3)*diag(length(m_x)) + 0.3*calibrate::ones(length(m_x))
+  sigma_yy <- (1 - 0.3)*diag(length(m_x)) + 0.3*calibrate::ones(length(m_x))
+  sigma_xy <- rho_between*calibrate::ones(n = length(m_x), p = length(m_y))
   sigma = rbind(cbind(sigma_xx, sigma_xy), cbind(t(sigma_xy), sigma_yy))
   return(sigma)
 }
@@ -116,9 +116,9 @@ Sigma_between_mild <- function(rho_between, m_x, m_y){
 Sigma_between_strong <- function(rho_between, m_x, m_y){
   dim = length(m_x) + length(m_y)
   sigma <- diag(dim)
-  sigma_xx <- (1 - 0.6)*diag(length(m_x)) + 0.6*ones(length(m_x))
-  sigma_yy <- (1 - 0.6)*diag(length(m_x)) + 0.6*ones(length(m_x))
-  sigma_xy <- rho_between*ones(n = length(m_x), m = length(m_y))
+  sigma_xx <- (1 - 0.6)*diag(length(m_x)) + 0.6*calibrate::ones(length(m_x))
+  sigma_yy <- (1 - 0.6)*diag(length(m_x)) + 0.6*calibrate::ones(length(m_x))
+  sigma_xy <- rho_between*calibrate::ones(n = length(m_x), p = length(m_y))
   sigma = rbind(cbind(sigma_xx, sigma_xy), cbind(t(sigma_xy), sigma_yy))
   return(sigma)
 }
