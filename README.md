@@ -1,6 +1,6 @@
 # fastMI: a fast and consistent copula-based nonparametric estimator of mutual information
 
-> Purkayastha, S., & Song, P. X. (2022). fastMI: a fast and consistent copula-based estimator of mutual information. arXiv preprint arXiv:2212.10268.
+> S. Purkayastha and P.X.-K. Song, fastMI: A fast and consistent copula-based nonparametric estimator of mutual information, Journal of Multivariate Analysis (2023), doi: https://doi.org/10.1016/j.jmva.2023.105270.
 
 In this brief tutorial we illustrate the usage of the functions written for this package.
 
